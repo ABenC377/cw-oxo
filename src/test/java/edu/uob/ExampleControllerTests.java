@@ -68,4 +68,13 @@ class ExampleControllerTests {
     // The next lins is a bit ugly, but it is the easiest way to test exceptions (soz)
     assertThrows(InvalidIdentifierLengthException.class, ()-> sendCommandToController("abc123"), failedTestComment);
   }
+
+  @Test
+  void testRespondingToInput() throws OXOMoveException {
+    int row, col;
+    OXOPlayer player;
+    // Do this later, when I have a bit more patience
+
+    String failedTestComment = "Tile incorrectly updated";
+  }
 }
