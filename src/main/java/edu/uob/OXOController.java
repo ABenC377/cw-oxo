@@ -2,9 +2,6 @@ package edu.uob;
 import edu.uob.OXOMoveException.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static java.lang.Character.*;
 
@@ -104,27 +101,11 @@ public class OXOController {
 
     public void decreaseWinThreshold() {
         int currentThreshold = gameModel.getWinThreshold();
-        if (currentThreshold > 2 && this.reducedThresholdDoesntEndGame()) {
+        if (currentThreshold > 2) {
             gameModel.setWinThreshold(currentThreshold - 1);
         }
     }
 
-    // Test this a LOT
-    private boolean reducedThresholdDoesntEndGame() {
-        int current = gameModel.getWinThreshold();
-        gameModel.setWinThreshold(current - 1);
-        Set<Integer> haveWon = new TreeSet<>();
-        for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
-            for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {
-                boolean isNotEmpty = (gameModel.getCellOwner(row, col) != null);
-                if (isNotEmpty && this.moveIsAWinner(row, col)) {
-                    haveWon.add(gameModel.getNumberOfPlayer(gameModel.getCellOwner(row, col)));
-                }
-            }
-        }
-        gameModel.setWinThreshold(current);
-        return (haveWon.size() > 1);
-    }
     public void reset() {
         for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
             for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {

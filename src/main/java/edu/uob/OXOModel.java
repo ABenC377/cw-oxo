@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class OXOModel {
     private final ArrayList<ArrayList<OXOPlayer>> cells;
-    private ArrayList<OXOPlayer> players;
+    private OXOPlayer[] players;
     private int currentPlayerNumber;
     private OXOPlayer winner;
     private boolean gameDrawn;
@@ -19,25 +19,26 @@ public class OXOModel {
                 cells.get(i).add(null);
             }
         }
-        players = new ArrayList<>();
+        players = new OXOPlayer[2];
         winner = null;
         gameDrawn = false;
     }
 
     public int getNumberOfPlayers() {
-        return players.size();
+        return players.length;
     }
 
     public void addPlayer(OXOPlayer player) {
-        players.add(player);
+        for (int i = 0; i < players.length; i++) {
+            if (players[i] == null) {
+                players[i] = player;
+                return;
+            }
+        }
     }
 
     public OXOPlayer getPlayerByNumber(int number) {
-        return players.get(number);
-    }
-
-    public int getNumberOfPlayer(OXOPlayer player) {
-        return players.indexOf(player);
+        return players[number];
     }
 
     public OXOPlayer getWinner() {
