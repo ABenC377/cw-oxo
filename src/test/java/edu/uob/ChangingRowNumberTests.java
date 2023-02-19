@@ -96,4 +96,95 @@ public class ChangingRowNumberTests {
         String failedTestComment = "Adding row to nine-row board results in a ten-row board (which it shouldn't)";
         assertEquals(model.getNumberOfRows(), 9, failedTestComment);
     }
+    @Test
+    void removeRowTo8Works() throws OXOMoveException {
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        String failedTestComment = "Failed to get to nine rows";
+        assertEquals(model.getNumberOfRows(), 9, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from nine-row board does not result in an eight-row board";
+        assertEquals(model.getNumberOfRows(), 8, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo7Works() throws OXOMoveException {
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        String failedTestComment = "Failed to get to eight rows";
+        assertEquals(model.getNumberOfRows(), 8, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from eight-row board does not result in a seven-row board";
+        assertEquals(model.getNumberOfRows(), 7, failedToRemoveString);
+    }
+
+    @Test
+    void removeRowTo6Works() throws OXOMoveException {
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        String failedTestComment = "Failed to get to seven rows";
+        assertEquals(model.getNumberOfRows(), 7, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from seven-row board does not result in a six-row board";
+        assertEquals(model.getNumberOfRows(), 6, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo5Works() throws OXOMoveException {
+        controller.addRow();
+        controller.addRow();
+        controller.addRow();
+        String failedTestComment = "Failed to get to six rows";
+        assertEquals(model.getNumberOfRows(), 6, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from six-row board does not result in a five-row board";
+        assertEquals(model.getNumberOfRows(), 5, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo4Works() throws OXOMoveException {
+        controller.addRow();
+        controller.addRow();
+        String failedTestComment = "Failed to get to five rows";
+        assertEquals(model.getNumberOfRows(), 5, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from five-row board does not result in a four-row board";
+        assertEquals(model.getNumberOfRows(), 4, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo3Works() throws OXOMoveException {
+        controller.addRow();
+        String failedTestComment = "Failed to get to four rows";
+        assertEquals(model.getNumberOfRows(), 4, failedTestComment);
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from four-row board does not result in a three-row board";
+        assertEquals(model.getNumberOfRows(), 3, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo2Works() throws OXOMoveException {
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from three-row board does not result in a two-row board";
+        assertEquals(model.getNumberOfRows(), 2, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo1Works() throws OXOMoveException {
+        controller.removeRow();
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from two-row board does not result in a one-row board";
+        assertEquals(model.getNumberOfRows(), 1, failedToRemoveString);
+    }
+    @Test
+    void removeRowTo0Fails() throws OXOMoveException {
+        controller.removeRow();
+        controller.removeRow();
+        controller.removeRow();
+        String failedToRemoveString = "Removing row from one-row board does not keep the board at one row";
+        assertEquals(model.getNumberOfRows(), 1, failedToRemoveString);
+    }
 }

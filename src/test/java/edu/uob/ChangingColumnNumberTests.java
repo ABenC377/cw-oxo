@@ -102,4 +102,103 @@ public class ChangingColumnNumberTests {
         String failedTestComment = "Adding column to nine-column board does results in a ten-column board (which it shouldn't)";
         assertEquals(model.getNumberOfColumns(), 9, failedTestComment);
     }
+
+    @Test
+    void removeColumnTo8Works() throws OXOMoveException {
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 9, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from nine-column board does not result in an eight-column board";
+        assertEquals(model.getNumberOfColumns(), 8, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo7Works() throws OXOMoveException {
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 8, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from eight-column board does not result in a seven-column board";
+        assertEquals(model.getNumberOfColumns(), 7, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo6Works() throws OXOMoveException {
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 7, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from seven-column board does not result in a six-column board";
+        assertEquals(model.getNumberOfColumns(), 6, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo5Works() throws OXOMoveException {
+        controller.addColumn();
+        controller.addColumn();
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 6, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from six-column board does not result in a five-column board";
+        assertEquals(model.getNumberOfColumns(), 5, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo4Works() throws OXOMoveException {
+        controller.addColumn();
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 5, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from five-column board does not result in a four-column board";
+        assertEquals(model.getNumberOfColumns(), 4, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo3Works() throws OXOMoveException {
+        controller.addColumn();
+        String failedSetupComment = "Adding columns to get to the starting state for this test failed";
+        assertEquals(model.getNumberOfColumns(), 4, failedSetupComment);
+        controller.removeColumn();
+        String failedTestComment = "Removing column from four-column board does not result in a three-column board";
+        assertEquals(model.getNumberOfColumns(), 3, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo2Works() throws OXOMoveException {
+        controller.removeColumn();
+        String failedTestComment = "Removing column from three-column board does not result in a two-column board";
+        assertEquals(model.getNumberOfColumns(), 2, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo1Works() throws OXOMoveException {
+        controller.removeColumn();
+        controller.removeColumn();
+        String failedTestComment = "Removing column from two-column board does not result in a one-column board";
+        assertEquals(model.getNumberOfColumns(), 1, failedTestComment);
+    }
+
+    @Test
+    void removeColumnTo0Fails() throws OXOMoveException {
+        controller.removeColumn();
+        controller.removeColumn();
+        controller.removeColumn();
+        String failedTestComment = "Removing column from one-column board does not keep the board with one column";
+        assertEquals(model.getNumberOfColumns(), 1, failedTestComment);
+    }
 }

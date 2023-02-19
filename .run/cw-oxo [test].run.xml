@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="cw-oxo" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+  <configuration default="false" name="cw-oxo [test]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -9,7 +9,9 @@
             <set />
           </option>
           <option name="goals">
-            <list />
+            <list>
+              <option value="test" />
+            </list>
           </option>
           <option name="pomFileName" />
           <option name="profilesMap">
