@@ -2,11 +2,10 @@ package edu.uob;
 import edu.uob.OXOMoveException.*;
 import org.jetbrains.annotations.NotNull;
 
-
 import static java.lang.Character.*;
 
 public class OXOController {
-    OXOModel gameModel;
+    public OXOModel gameModel;
 
     public OXOController(OXOModel model) {
         gameModel = model;
@@ -101,9 +100,35 @@ public class OXOController {
 
     public void decreaseWinThreshold() {
         int currentThreshold = gameModel.getWinThreshold();
-        if (currentThreshold > 2) {
+        boolean canReduceThreshold = this.canReduceThreshold();
+        if (currentThreshold > 2 && canReduceThreshold) {
             gameModel.setWinThreshold(currentThreshold - 1);
         }
+    }
+
+    private boolean canReduceThreshold() {
+        int current = gameModel.getWinThreshold();
+        OXOPlayer winner = null;
+        gameModel.setWinThreshold(current - 1);
+        for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
+            for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {
+                OXOPlayer owner = gameModel.getCellOwner(row, col);
+                boolean shouldCheck = (owner != null && owner != winner);
+                if (shouldCheck && this.moveIsAWinner(row, col)) {
+                    if (winner == null) {
+                        winner = owner;
+                    } else {
+                        gameModel.setWinThreshold(current);
+                        return false;
+                    }
+                }
+            }
+        }
+        gameModel.setWinThreshold(current);
+        if (winner != null) {
+            gameModel.setWinner(winner);
+        }
+        return true;
     }
 
     public void reset() {
