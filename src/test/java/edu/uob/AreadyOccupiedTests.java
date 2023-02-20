@@ -4,7 +4,8 @@ import edu.uob.OXOMoveException.*;
 import org.junit.jupiter.api.*;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,11 +25,11 @@ public class AreadyOccupiedTests {
             "H9", "i9", "I9"};
     private final int numberOfInputs = 81;
 
-    private ArrayList<String> played;
+    private Set<String> played;
     @BeforeEach
     void Setup() {
         model = new OXOModel(9, 9, 10);
-        played = new ArrayList<>();
+        played = new HashSet<>();
         model.addPlayer(new OXOPlayer('X'));
         model.addPlayer(new OXOPlayer('O'));
         controller = new OXOController(model);
@@ -47,6 +48,10 @@ public class AreadyOccupiedTests {
      * that the correct exception is thrown.  Because it's random it makes sense to run it a relatively large number
      * of times to improve the chances of interesting edge cases being run into.  It should never fail, so there
      * is no downside to runnning it a large number of times.
+     *
+     * We know that this test should never fail because the win threshold is 10, so it is impossible for the game to be
+     * won, and there is no option for the test to play a move at cell g1 -> therefore no chance of a draw.  Therefore,
+     * we can be certain that the game will continue until there is a repeated move.
      */
     @RepeatedTest(250)
     @DisplayName("Throws a CellAlreadyTakenException when a play that has already been made is made again in a 9X9 board")
@@ -57,7 +62,7 @@ public class AreadyOccupiedTests {
             played.add(moveBeingPlayed);
             sendCommandToController(moveBeingPlayed);
         }
-        String failedTestString = "Input of an already played move doesn't throw a CellAlreadyTakenException";
+        String failedTestString = "Input of " + moveBeingPlayed + " has already been played, but doesn't throw a CellAlreadyTakenException";
         String finalMoveBeingPlayed = moveBeingPlayed;
         assertThrows(CellAlreadyTakenException.class, ()-> sendCommandToController(finalMoveBeingPlayed), failedTestString);
     }
