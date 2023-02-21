@@ -3,7 +3,6 @@ import edu.uob.OXOMoveException.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -33,7 +32,8 @@ public class UserInputTests {
         assertTimeoutPreemptively(Duration.ofMillis(1000), ()-> controller.handleIncomingCommand(command), timeoutComment);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that a valid user input does not throw an exception")
+    @ParameterizedTest(name = "{displayName} when the user inputs {arguments}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
             "H1", "i1", "I1", "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
             "H2", "i2", "I2", "a3", "A3", "b3", "B3", "c3", "C3", "d3", "D3", "e3", "E3", "f3", "F3", "g3", "G3", "h3",
@@ -44,45 +44,45 @@ public class UserInputTests {
             "H7", "i7", "I7", "a8", "A8", "b8", "B8", "c8", "C8", "d8", "D8", "e8", "E8", "f8", "F8", "g8", "G8", "h8",
             "H8", "i8", "I8", "a9", "A9", "b9", "B9", "c9", "C9", "d9", "D9", "e9", "E9", "f9", "F9", "g9", "G9", "h9",
             "H9", "i9", "I9"})
-    @DisplayName("Accepts valid inputs from the user")
     void testValidUserInputs(String inputString) {
         String failedTestString = "Valid input resulted in an OXOMoveExceoption being thrown";
         assertDoesNotThrow(()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that InvalidIdentifierLengthExpectation is thrown when an input of the wrong size is provided by user")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {"a10", "", " a1", "a1 ", " A1", "A1 ", " a2", "a2 ", " A2", "A2 ", " b1", "b1 ", " b2",
             "b2 ", " B2", "B2 ", " b1", "b1 ", "    ", "a10", "aergaergaegr", "b", "1", " a1 ", " "})
-    @DisplayName("Throws an InvalidIdentifierLengthExpectation when an input of the wrong size (i.e., not 2) is provided by user")
     void testWrongSizeUserInputs(String inputString) {
         String failedTestString = "Input of non-two-size doesn't throw an InvalidIdentifierLengthException";
         assertThrows(InvalidIdentifierLengthException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-letter row identifier is provided")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {"!1", "\"1", "#1", "$1", "%1", "&1", "'1", "(1", ")1", "*1", "+1", ",1", "-1", ".1",
             "/1", "01", "11", "21", "31", "41", "51", "61", "71", "81", "91", ":1", ";1", "<1", "=1", ">1",
             "?1", "@1", "[1", "\\1", "]1", "^1", "_1", "`1", "{1", "|1", "}1", "~1"})
-    @DisplayName("Throws an InvalidIdentifierCharacterException when a non-letter row is provided")
     void testWrongRowInputs(String inputString) {
         String failedTestString = "Input of non-letter row identifier doesn't throw an InvalidIdentifierCharacterException";
         assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-digit column identifier is provided")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {"a!", "a\"", "a#", "a$", "a%", "a&", "a'", "a(", "a)", "a*", "a+", "a,", "a-", "a.",
             "a/", "a:", "a;", "a<", "a=", "a>", "a?", "a@", "aA", "aB", "aC", "aD", "aE", "aF", "aG", "aH", "aI",
             "aJ", "aK", "aL", "aM", "aN", "aO", "aP", "aQ", "aR", "aS", "aT", "aU", "aV", "aW", "aX", "aY", "aZ",
             "[1", "\\1", "]1", "^1", "_1", "`1", "aa", "ab", "ac", "ad", "ae", "af", "ag", "ah", "ai", "aj", "ak",
             "al", "am", "an", "ao", "ap", "aq", "ar", "as", "at", "au", "av", "aw", "ax", "ay", "az", "{1", "|1",
             "}1", "~1"})
-    @DisplayName("Throws an InvalidIdentifierCharacterException when a non-digit column is provided")
     void testWrongColumnInputs(String inputString) {
         String failedTestString = "Input of non-digit column identifier doesn't throw an InvalidIdentifierCharacterException";
         assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 9x9 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "a0", "A0", "b0", "B0", "c0", "C0", "d0", "D0", "e0", "E0", "f0", "F0", "g0", "G0", "h0", "H0", "i0", "I0",
             "j0", "J0", "k0", "K0", "l0", "L0", "m0", "M0", "n0", "N0", "o0", "O0", "p0", "P0", "q0", "Q0", "r0", "R0",
@@ -106,18 +106,17 @@ public class UserInputTests {
             "j9", "J9", "k9", "K9", "l9", "L9", "m9", "M9", "n9", "N9", "o9", "O9", "p9", "P9", "q9", "Q9", "r9", "R9",
             "s9", "S9", "t9", "T9", "u9", "U9", "v9", "V9", "w9", "W9", "x9", "X9", "y9", "Y9", "z9", "Z9",
             })
-    @DisplayName("Throws a reference to a cell outside of the 9x9 grid is provided")
     void testOutsideOfBoardReference9X9(String inputString) {
         String failedTestString = "Input of a cell outside of the board doesn't throw an OutsideCellRangeException";
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of an 8x8 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "i1", "I1", "i2", "I2", "i3", "I3", "i4", "I4", "i5", "I5", "i6", "I6", "i7", "I7", "i8", "I8",
             "a9", "A9", "b9", "B9", "c9", "C9", "d9", "D9", "e9", "E9", "f9", "F9", "g9", "G9", "h9", "H9", "i9", "I9",
     })
-    @DisplayName("Throws a reference to a cell outside of the 8x8 grid is provided")
     void testOutsideOfBoardReference8X8(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -125,12 +124,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 7x7 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "h1", "H1", "h2", "H2", "h3", "H3", "h4", "H4", "h5", "H5", "h6", "H6", "h7", "H7",
             "a8", "A8", "b8", "B8", "c8", "C8", "d8", "D8", "e8", "E8", "f8", "F8", "g8", "G8", "h8", "H8",
     })
-    @DisplayName("Throws a reference to a cell outside of the 7x7 grid is provided")
     void testOutsideOfBoardReference7X7(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -140,12 +139,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 6x6 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "g1", "G1", "g2", "G2", "g3", "G3", "g4", "G4", "g5", "G5", "g6", "G6",
             "a7", "A7", "b7", "B7", "c7", "C7", "d7", "D7", "e7", "E7", "f7", "F7", "g7", "G7",
     })
-    @DisplayName("Throws a reference to a cell outside of the 6x6 grid is provided")
     void testOutsideOfBoardReference6X6(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -157,12 +156,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 5x5 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "f1", "F1", "f2", "F2", "f3", "F3", "f4", "F4", "f5", "F5",
             "a6", "A6", "b6", "B6", "c6", "C6", "d6", "D6", "e6", "E6", "f6", "F6"
     })
-    @DisplayName("Throws a reference to a cell outside of the 5x5 grid is provided")
     void testOutsideOfBoardReference5X5(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -176,12 +175,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 4x4 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "e1", "E1", "e2", "E2", "e3", "E3", "e4", "E4",
             "a5", "A5", "b5", "B5", "c5", "C5", "d5", "D5", "e5", "E5"
     })
-    @DisplayName("Throws a reference to a cell outside of the 4x4 grid is provided")
     void testOutsideOfBoardReference4X4(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -197,12 +196,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 3x3 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "d1", "D1", "d2", "D2", "d3", "D3",
             "a4", "A4", "b4", "B4", "c4", "C4", "d4", "D4"
     })
-    @DisplayName("Throws a reference to a cell outside of the 3x3 grid is provided")
     void testOutsideOfBoardReference3X3(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -220,12 +219,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 2x2 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "c1", "C1", "c2", "C2",
             "a3", "A3", "b3", "B3", "c3", "C3"
     })
-    @DisplayName("Throws a reference to a cell outside of the 2x2 grid is provided")
     void testOutsideOfBoardReference2X2(String inputString) {
         controller.removeColumn();
         controller.removeRow();
@@ -245,12 +244,12 @@ public class UserInputTests {
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that OutsideCellRangeException is thrown when a cell outside of a 1x1 grid is requested")
+    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {
             "b1", "B1",
             "a2", "A2", "b2", "B2"
     })
-    @DisplayName("Throws a reference to a cell outside of the 1x1 grid is provided")
     void testOutsideOfBoardReference1X1(String inputString) {
         controller.removeColumn();
         controller.removeRow();

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.time.Duration;
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -13,23 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MultiPlayerTests {
     private OXOModel model;
-    private OXOController controller;
     @BeforeEach
     void Setup() {
         model = new OXOModel(9, 9, 3);
         model.addPlayer(new OXOPlayer('X'));
         model.addPlayer(new OXOPlayer('O'));
-        controller = new OXOController(model);
     }
 
-    // This next method is a utility function that can be used by any of the test methods to _safely_ send a command to the controller
-    void sendCommandToController(String command) {
-        // Try to send a command to the server - call will timeout if it takes too long (in case the server enters an infinite loop)
-        // Note: this is ugly code and includes syntax that you haven't encountered yet
-        String timeoutComment = "Controller took too long to respond (probably stuck in an infinite loop)";
-        assertTimeoutPreemptively(Duration.ofMillis(1000), ()-> controller.handleIncomingCommand(command), timeoutComment);
-    }
-    @ParameterizedTest
+    @DisplayName("Testing that players can be added")
+    @ParameterizedTest(name = "{displayName} {arguments} times")
     @MethodSource("intProvider")
     void canAddNPlayers(int n) {
         int start = model.getNumberOfPlayers();
@@ -38,7 +29,9 @@ public class MultiPlayerTests {
         String failureMessage = "Adding " + n + " players to the model did not update the number of players to 2 + " + n;
         assertEquals(start + n, current, failureMessage);
     }
-    @ParameterizedTest
+
+    @DisplayName("Testing that players can be removed")
+    @ParameterizedTest(name = "{displayName} {arguments} times")
     @MethodSource("intProvider")
     void canRemoveNPlayers(int n) {
         this.addNPlayers(81);
@@ -49,6 +42,7 @@ public class MultiPlayerTests {
         assertEquals(start - n, current, failureMessage);
     }
 
+    @DisplayName("Testing that you cannot get to zero players")
     @Test
     void cannotGetZeroPlayers() {
         this.removeNPlayers(2);

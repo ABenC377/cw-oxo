@@ -1,6 +1,7 @@
 package edu.uob;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -38,9 +39,11 @@ class ResetTests {
         String timeoutComment = "Controller took too long to respond (probably stuck in an infinite loop)";
         assertTimeoutPreemptively(Duration.ofMillis(1000), ()-> controller.handleIncomingCommand(command), timeoutComment);
     }
+
     // Testing the reset() method for the controller -
     // should reset all cells to null, and make the player to move next the first player
-    @ParameterizedTest
+    @DisplayName("Testing that controller.reset() returns play to the first player")
+    @ParameterizedTest(name = "{displayName} after an opening play of {arguments}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
             "H1", "i1", "I1", "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
             "H2", "i2", "I2", "a3", "A3", "b3", "B3", "c3", "C3", "d3", "D3", "e3", "E3", "f3", "F3", "g3", "G3", "h3",
@@ -59,7 +62,9 @@ class ResetTests {
         String failedTestComment = "Reset failed to make it player 1's go, when only a single move was made and there are only two players";
         assertEquals(model.getCurrentPlayerNumber(), 0, failedTestComment);
     }
-    @ParameterizedTest
+
+    @DisplayName("Testing that controller.reset() removes plays from the board")
+    @ParameterizedTest(name = "{displayName} after an opening play of {arguments}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
             "H1", "i1", "I1", "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
             "H2", "i2", "I2", "a3", "A3", "b3", "B3", "c3", "C3", "d3", "D3", "e3", "E3", "f3", "F3", "g3", "G3", "h3",
@@ -79,7 +84,8 @@ class ResetTests {
         assertTrue(this.boardIsClear(), failureMessage);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that controller.reset() removes plays from the board")
+    @ParameterizedTest(name = "{displayName} #{index}")
     @MethodSource("intProvider")
     void resetRemovesSeriesOfPlays(int n) {
         for (int i = 0; i < (n % 4); i++) {
@@ -104,7 +110,8 @@ class ResetTests {
         assertEquals(model.getCurrentPlayerNumber(), 0, wrongPlayerMessage);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that controller.reset() returns play to the first player")
+    @ParameterizedTest(name = "{displayName} #{index}")
     @MethodSource("intProvider")
     void resetReturnsPlayToFirstPlayer(int n) {
         for (int i = 0; i < (n % 4); i++) {
@@ -127,7 +134,8 @@ class ResetTests {
         assertEquals(model.getCurrentPlayerNumber(), 0, wrongPlayerMessage);
     }
 
-    @ParameterizedTest
+    @DisplayName("Testing that controller.reset() leaves the number of rows and columns unchanged")
+    @ParameterizedTest(name = "{displayName} #{index}")
     @MethodSource("intProvider")
     void resetLeavesRowsAndColumnsUnchanged(int n) {
         controller.addRow();
