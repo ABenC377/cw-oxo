@@ -1,5 +1,4 @@
 package edu.uob;
-import edu.uob.OXOMoveException.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -291,15 +290,6 @@ public class WinThresholdTests {
         }
     }
 
-    private void setupBoardWithTwoNxNWinners(int n) {
-        for (int i = 0; i < n; i++) {
-            String aString = "a" + (i + 1);
-            sendCommandToController(aString);
-            String bString = "b" + (i + 1);
-            sendCommandToController(bString);
-        }
-    }
-
     private void setupBoardWithOneNxNWinners(int n) {
         for (int i = 0; i < n; i++) {
             String aString = "a" + (i + 1);
@@ -311,7 +301,7 @@ public class WinThresholdTests {
         for (int row = 0; row < model.getNumberOfRows(); row++) {
             for (int col = 0; col < model.getNumberOfColumns(); col++) {
                 char rowChar = (char) ('a' + row);
-                String input = String.valueOf(rowChar) + String.valueOf(col + 1);
+                String input = String.valueOf(rowChar + (col + 1));
                 this.sendCommandToController(input);
             }
         }

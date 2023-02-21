@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class OXOModel {
     private final ArrayList<ArrayList<OXOPlayer>> cells;
-    private ArrayList<OXOPlayer> players;
+    private final ArrayList<OXOPlayer> players;
     private int currentPlayerNumber;
     private OXOPlayer winner;
     private boolean gameDrawn;
@@ -30,6 +30,12 @@ public class OXOModel {
 
     public void addPlayer(OXOPlayer player) {
         players.add(player);
+    }
+
+    public void removePlayer() {
+        if (players.size() > 0) {
+            players.remove(players.size() - 1);
+        }
     }
 
     public OXOPlayer getPlayerByNumber(int number) {
