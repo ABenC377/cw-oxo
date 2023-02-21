@@ -301,7 +301,7 @@ public class WinThresholdTests {
         for (int row = 0; row < model.getNumberOfRows(); row++) {
             for (int col = 0; col < model.getNumberOfColumns(); col++) {
                 char rowChar = (char) ('a' + row);
-                String input = String.valueOf(rowChar + (col + 1));
+                String input = String.valueOf(rowChar) + String.valueOf(col + 1);
                 this.sendCommandToController(input);
             }
         }

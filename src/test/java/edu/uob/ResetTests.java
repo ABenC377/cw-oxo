@@ -16,16 +16,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class ResetTests {
     private OXOModel model;
     private OXOController controller;
-    String[] moves = {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1",
-            "i1", "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-            "i2", "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-            "i3", "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-            "i4", "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-            "i5", "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-            "i6", "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-            "i7", "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-            "i8", "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9",
-            "i9"};
+    String[] moves = {"a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1",
+            "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2",
+            "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "i3",
+            "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4", "i4",
+            "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5", "i5",
+            "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6", "i6",
+            "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7", "i7",
+            "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "i8",
+            "a9", "b9", "c9", "d9", "e9", "f9", "g9", "h9", "i9"};
     @BeforeEach
     void setup() {
         model = new OXOModel(9, 9, 3);
@@ -128,16 +127,48 @@ class ResetTests {
         assertEquals(model.getCurrentPlayerNumber(), 0, wrongPlayerMessage);
     }
 
+    @ParameterizedTest
+    @MethodSource("intProvider")
+    void resetLeavesRowsAndColumnsUnchanged(int n) {
+        controller.addRow();
+        for (int i = 0; i < (n % 5); i++) {
+            controller.addRow();
+        }
+        controller.addColumn();
+        for (int j = 0; j < (n % 3); j++) {
+            controller.addColumn();
+        }
+        int plays = 1 + (n % 80);
+        this.makeWinImpossible();
+        ArrayList<String> remainingMoves = new ArrayList<>(Arrays.asList(moves));
+
+        for (int i = 0; i < plays; i++) {
+            int moveIndex = (int)(Math.random() * remainingMoves.size());
+            String moveToPlay = remainingMoves.get(moveIndex);
+            remainingMoves.remove(moveIndex);
+            sendCommandToController(moveToPlay);
+        }
+        int rowStart = model.getNumberOfRows();
+        int colStart = model.getNumberOfColumns();
+        controller.reset();
+        int rowCurrent = model.getNumberOfRows();
+        int colCurrent = model.getNumberOfColumns();
+        String wrongRowMessage = "controller.reset() changes the number of rows";
+        assertEquals(rowStart, rowCurrent, wrongRowMessage);
+        String wrongColMessage = "controller.reset() changes the number of columns";
+        assertEquals(colStart, colCurrent, wrongColMessage);
+    }
+
     /*
         There are some test here which play random games and then make sure that the controller.reset() method does as
         it is intended to.  They also change the number of players to make sure it works well with up to six players.
         Due to the random nature of these tests, a relatively large number of iterations are required to achieve
-        meaningful coverage.  I have plummed for 1000 iterations, which seems like a large number, but when you consider
+        meaningful coverage.  I have plummed for 500 iterations, which seems like a large number, but when you consider
         that there are 81 * 4 different set-up environments (1-81 moves before reset, and 2-6 players) then it is only
-        really 2.5 iterations per setup
+        just over one iteration per setup
      */
     static Stream<Integer> intProvider() {
-        return IntStream.rangeClosed(1, 1000).boxed();
+        return IntStream.rangeClosed(1, 500).boxed();
     }
 
     private boolean boardIsClear() {

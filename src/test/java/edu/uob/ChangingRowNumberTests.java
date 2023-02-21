@@ -40,72 +40,46 @@ public class ChangingRowNumberTests {
     }
     @Test
     void addRowTo5Works() {
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(2);
         String failedTestComment = "Adding row to four-row board does not result in a five-row board";
         assertEquals(model.getNumberOfRows(), 5, failedTestComment);
     }
     @Test
     void addRowTo6Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(3);
         String failedTestComment = "Adding row to five-row board does not result in a six-row board";
         assertEquals(model.getNumberOfRows(), 6, failedTestComment);
     }
     @Test
     void addRowTo7Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(4);
         String failedTestComment = "Adding row to six-row board does not result in a seven-row board";
         assertEquals(model.getNumberOfRows(), 7, failedTestComment);
     }
 
     @Test
     void addRowTo8Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(5);
         String failedTestComment = "Adding row to seven-row board does not result in a eight-row board";
         assertEquals(model.getNumberOfRows(), 8, failedTestComment);
     }
 
     @Test
     void addRowTo9Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(6);
         String failedTestComment = "Adding row to eight-row board does not result in a nine-row board";
         assertEquals(model.getNumberOfRows(), 9, failedTestComment);
     }
 
     @Test
     void addRowTo10Fails() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(7);
         String failedTestComment = "Adding row to nine-row board results in a ten-row board (which it shouldn't)";
         assertEquals(model.getNumberOfRows(), 9, failedTestComment);
     }
     @Test
     void removeRowTo8Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(6);
         String failedTestComment = "Failed to get to nine rows";
         assertEquals(model.getNumberOfRows(), 9, failedTestComment);
         controller.removeRow();
@@ -114,11 +88,7 @@ public class ChangingRowNumberTests {
     }
     @Test
     void removeRowTo7Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(5);
         String failedTestComment = "Failed to get to eight rows";
         assertEquals(model.getNumberOfRows(), 8, failedTestComment);
         controller.removeRow();
@@ -128,10 +98,7 @@ public class ChangingRowNumberTests {
 
     @Test
     void removeRowTo6Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(4);
         String failedTestComment = "Failed to get to seven rows";
         assertEquals(model.getNumberOfRows(), 7, failedTestComment);
         controller.removeRow();
@@ -140,9 +107,7 @@ public class ChangingRowNumberTests {
     }
     @Test
     void removeRowTo5Works() {
-        controller.addRow();
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(3);
         String failedTestComment = "Failed to get to six rows";
         assertEquals(model.getNumberOfRows(), 6, failedTestComment);
         controller.removeRow();
@@ -151,8 +116,7 @@ public class ChangingRowNumberTests {
     }
     @Test
     void removeRowTo4Works() {
-        controller.addRow();
-        controller.addRow();
+        this.addNRows(2);
         String failedTestComment = "Failed to get to five rows";
         assertEquals(model.getNumberOfRows(), 5, failedTestComment);
         controller.removeRow();
@@ -176,16 +140,13 @@ public class ChangingRowNumberTests {
     }
     @Test
     void removeRowTo1Works() {
-        controller.removeRow();
-        controller.removeRow();
+        this.removeNRows(2);
         String failedToRemoveString = "Removing row from two-row board does not result in a one-row board";
         assertEquals(model.getNumberOfRows(), 1, failedToRemoveString);
     }
     @Test
     void removeRowTo0Fails() {
-        controller.removeRow();
-        controller.removeRow();
-        controller.removeRow();
+        this.removeNRows(3);
         String failedToRemoveString = "Removing row from one-row board does not keep the board at one row";
         assertEquals(model.getNumberOfRows(), 1, failedToRemoveString);
     }
