@@ -15,6 +15,7 @@ public class OXOController {
         if (this.checkAlreadyWon()) {
             return;
         }
+        // DO A TONNE OF TESTS TO MAKE SURE THAT EXCEPTIONS AREN'T THROWN WHEN GAME WON
         if (command.length() != 2) {
             throw new InvalidIdentifierLengthException(command.length());
         }
@@ -94,18 +95,28 @@ public class OXOController {
         }
     }
     public void increaseWinThreshold() {
-        int currentThreshold = gameModel.getWinThreshold();
-        if (currentThreshold < 9) {
+        if (isEmpty()) {
+            int currentThreshold = gameModel.getWinThreshold();
             gameModel.setWinThreshold(currentThreshold + 1);
         }
     }
 
     public void decreaseWinThreshold() {
-        int currentThreshold = gameModel.getWinThreshold();
-        boolean canReduceThreshold = this.canReduceThreshold();
-        if (currentThreshold > 3 && canReduceThreshold) {
+        if (isEmpty()) {
+            int currentThreshold = gameModel.getWinThreshold();
             gameModel.setWinThreshold(currentThreshold - 1);
         }
+    }
+
+    private boolean isEmpty() {
+        for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
+            for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {
+                if (gameModel.getCellOwner(row, col) != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private boolean canReduceThreshold() {
@@ -140,6 +151,8 @@ public class OXOController {
             }
         }
         gameModel.setCurrentPlayerNumber(0);
+        gameModel.setWinner(null);
+        gameModel.setGameNotDrawn();
     }
 
     private boolean moveIsAWinner(int row, int col) {
