@@ -2,11 +2,12 @@ package edu.uob;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChangingColumnNumberTests {
     private OXOModel model;
@@ -34,83 +35,57 @@ public class ChangingColumnNumberTests {
     // Testing the addColumn() method in the controller.  Should add a column until you reach 9.
     // Then it should do nothing.
     @Test
-    void addColumnTo4Works() throws OXOMoveException {
+    void addColumnTo4Works() {
         controller.addColumn();
         String failedTestComment = "Adding column to three-column board does not result in a four-column board";
         assertEquals(model.getNumberOfColumns(), 4, failedTestComment);
     }
 
     @Test
-    void addColumnTo5Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo5Works() {
+        this.addNColumns(2);
         String failedTestComment = "Adding column to four-column board does not result in a five-column board";
         assertEquals(model.getNumberOfColumns(), 5, failedTestComment);
     }
 
     @Test
-    void addColumnTo6Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo6Works() {
+        this.addNColumns(3);
         String failedTestComment = "Adding column to five-column board does not result in a six-column board";
         assertEquals(model.getNumberOfColumns(), 6, failedTestComment);
     }
 
     @Test
-    void addColumnTo7Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo7Works() {
+        this.addNColumns(4);
         String failedTestComment = "Adding column to six-column board does not result in a seven-column board";
         assertEquals(model.getNumberOfColumns(), 7, failedTestComment);
     }
 
     @Test
-    void addColumnTo8Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo8Works() {
+        this.addNColumns(5);
         String failedTestComment = "Adding column to seven-column board does not result in an eight-column board";
         assertEquals(model.getNumberOfColumns(), 8, failedTestComment);
     }
 
     @Test
-    void addColumnTo9Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo9Works() {
+        this.addNColumns(6);
         String failedTestComment = "Adding column to eight-column board does not result in a nine-column board";
         assertEquals(model.getNumberOfColumns(), 9, failedTestComment);
     }
 
     @Test
-    void addColumnTo10Fails() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void addColumnTo10Fails() {
+        this.addNColumns(7);
         String failedTestComment = "Adding column to nine-column board does results in a ten-column board (which it shouldn't)";
         assertEquals(model.getNumberOfColumns(), 9, failedTestComment);
     }
 
     @Test
-    void removeColumnTo8Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void removeColumnTo8Works() {
+        this.addNColumns(6);
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 9, failedSetupComment);
         controller.removeColumn();
@@ -119,12 +94,8 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo7Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void removeColumnTo7Works() {
+        this.addNColumns(5);
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 8, failedSetupComment);
         controller.removeColumn();
@@ -133,11 +104,8 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo6Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void removeColumnTo6Works() {
+        this.addNColumns(4);
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 7, failedSetupComment);
         controller.removeColumn();
@@ -146,10 +114,8 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo5Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
-        controller.addColumn();
+    void removeColumnTo5Works() {
+        this.addNColumns(3);
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 6, failedSetupComment);
         controller.removeColumn();
@@ -158,9 +124,8 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo4Works() throws OXOMoveException {
-        controller.addColumn();
-        controller.addColumn();
+    void removeColumnTo4Works() {
+        this.addNColumns(2);
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 5, failedSetupComment);
         controller.removeColumn();
@@ -169,7 +134,7 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo3Works() throws OXOMoveException {
+    void removeColumnTo3Works() {
         controller.addColumn();
         String failedSetupComment = "Adding columns to get to the starting state for this test failed";
         assertEquals(model.getNumberOfColumns(), 4, failedSetupComment);
@@ -179,26 +144,165 @@ public class ChangingColumnNumberTests {
     }
 
     @Test
-    void removeColumnTo2Works() throws OXOMoveException {
-        controller.removeColumn();
+    void removeColumnTo2Works() {
+        this.removeNColumns(1);
         String failedTestComment = "Removing column from three-column board does not result in a two-column board";
         assertEquals(model.getNumberOfColumns(), 2, failedTestComment);
     }
 
     @Test
-    void removeColumnTo1Works() throws OXOMoveException {
-        controller.removeColumn();
-        controller.removeColumn();
+    void removeColumnTo1Works() {
+        this.removeNColumns(2);
         String failedTestComment = "Removing column from two-column board does not result in a one-column board";
         assertEquals(model.getNumberOfColumns(), 1, failedTestComment);
     }
 
     @Test
-    void removeColumnTo0Fails() throws OXOMoveException {
-        controller.removeColumn();
-        controller.removeColumn();
-        controller.removeColumn();
+    void removeColumnTo0Fails() {
+        this.removeNColumns(3);
         String failedTestComment = "Removing column from one-column board does not keep the board with one column";
         assertEquals(model.getNumberOfColumns(), 1, failedTestComment);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
+            "H1", "i1", "I1"})
+    void removeOccupiedColumn9x1(String input) {
+        this.addNRows(6);
+        this.removeNColumns(2);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
+            "H2", "i2", "I2"})
+    void removeOccupiedColumn9x2(String input) {
+        this.addNRows(6);
+        this.removeNColumns(1);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a3", "A3", "b3", "B3", "c3", "C3", "d3",
+            "D3", "e3", "E3", "f3", "F3", "g3", "G3", "h3", "H3", "i3", "I3"})
+    void removeOccupiedColumn9x3(String input) {
+        this.addNRows(6);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a4", "A4", "b4", "B4", "c4", "C4", "d4", "D4", "e4", "E4", "f4", "F4", "g4", "G4", "h4",
+            "H4", "i4", "I4"})
+    void removeOccupiedColumn9x4(String input) {
+        this.addNRows(6);
+        this.addNColumns(1);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a5", "A5", "b5", "B5", "c5", "C5", "d5", "D5", "e5", "E5", "f5", "F5", "g5", "G5", "h5",
+            "H5", "i5", "I5"})
+    void removeOccupiedColumn9x5(String input) {
+        this.addNRows(6);
+        this.addNColumns(2);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a6", "A6", "b6", "B6", "c6", "C6", "d6", "D6", "e6", "E6", "f6", "F6", "g6", "G6", "h6",
+            "H6", "i6", "I6"})
+    void removeOccupiedColumn9x6(String input) {
+        this.addNRows(6);
+        this.addNColumns(3);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a7", "A7", "b7", "B7", "c7", "C7", "d7", "D7", "e7", "E7", "f7", "F7", "g7", "G7", "h7",
+            "H7", "i7", "I7"})
+    void removeOccupiedColumn9x7(String input) {
+        this.addNRows(6);
+        this.addNColumns(4);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a8", "A8", "b8", "B8", "c8", "C8", "d8", "D8", "e8", "E8", "f8", "F8", "g8", "G8", "h8",
+            "H8", "i8", "I8"})
+    void removeOccupiedColumn9x8(String input) {
+        this.addNRows(6);
+        this.addNColumns(5);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a9", "A9", "b9", "B9", "c9", "C9", "d9", "D9", "e9", "E9", "f9", "F9", "g9", "G9", "h9",
+            "H9", "i9", "I9"})
+    void removeOccupiedColumn9x9(String input) {
+        this.addNRows(6);
+        this.addNColumns(6);
+        int start = model.getNumberOfColumns();
+        sendCommandToController(input);
+        controller.removeColumn();
+        int current = model.getNumberOfColumns();
+        String failureMessage = "controller.removeColumn() removed a column despite it being occupied";
+        assertEquals(start, current, failureMessage);
+    }
+
+    private void addNColumns(int n) {
+        for (int i = 0; i < n; i++) {
+            controller.addColumn();
+        }
+    }
+    private void removeNColumns(int n) {
+        for (int i = 0; i < n; i++) {
+            controller.removeColumn();
+        }
+    }
+
+    private void addNRows(int n) {
+        for (int i = 0; i < n; i++) {
+            controller.addRow();
+        }
     }
 }

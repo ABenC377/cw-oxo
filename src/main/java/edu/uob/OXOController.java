@@ -79,9 +79,19 @@ public class OXOController {
         }
     }
     public void removeRow() {
-        if (gameModel.getNumberOfRows() > 1) {
+        if (gameModel.getNumberOfRows() > 1 && this.lastRowIsEmpty()) {
             gameModel.removeRow();
         }
+    }
+    private boolean lastRowIsEmpty() {
+        int r = gameModel.getNumberOfRows();
+        int c = gameModel.getNumberOfColumns();
+        for (int col = 0; col < c; col++) {
+            if (gameModel.getCellOwner(r - 1, col) != null) {
+                return false;
+            }
+        }
+        return true;
     }
     public void addColumn() {
         if (gameModel.getNumberOfColumns() < 9) {
@@ -90,9 +100,19 @@ public class OXOController {
         }
     }
     public void removeColumn() {
-        if (gameModel.getNumberOfColumns() > 1) {
+        if (gameModel.getNumberOfColumns() > 1 && this.lastColumnIsEmpty()) {
             gameModel.removeColumn();
         }
+    }
+    private boolean lastColumnIsEmpty() {
+        int r = gameModel.getNumberOfRows();
+        int c = gameModel.getNumberOfColumns();
+        for (int row = 0; row < r; row++) {
+            if (gameModel.getCellOwner(row, c - 1) != null) {
+                return false;
+            }
+        }
+        return true;
     }
     public void increaseWinThreshold() {
         if (isEmpty()) {
