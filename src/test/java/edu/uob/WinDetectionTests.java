@@ -1,6 +1,7 @@
 package edu.uob;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -30,7 +31,8 @@ public class WinDetectionTests {
     }
 
     // These tests are really simple - they play every possible winning line in a 9x9 board when the win threshold is 3
-    @ParameterizedTest
+    @DisplayName("Testing to confirm that a winning state is correctly recorded")
+    @ParameterizedTest(name = "{displayName} when X plays {0}->{2}->{4}")
     @CsvSource({
             "a1, b1, a2, b2, a3", "a2, b1, a3, b2, a4", "a3, b1, a4, b2, a5", "a4, b1, a5, b2, a6", "a5, b1, a6, b2, a7", "a6, b1, a7, b2, a8", "a7, b1, a8, b2, a9",
             "a1, b1, b2, c2, c3", "a2, b1, b3, b2, c4", "a3, b1, b4, b2, c5", "a4, b1, b5, b2, c6", "a5, b1, b6, b2, c7", "a6, b1, b7, b2, c8", "a7, b1, b8, b2, c9",
@@ -110,7 +112,7 @@ public class WinDetectionTests {
                  + ", " + moves.getString(1) + ", " + moves.getString(2) + ", " + moves.getString(0);
         assertTrue((model.getWinner() == null), setupFailedMessage);
         this.sendCommandToController(moves.getString(4));
-        String failureMessage = "Game not won after three consecutive cells played in by player 1.  winning line is: " +
+        String failureMessage = "Game not won after three contiguous cells are played by player 1.  winning line is: " +
                 moves.getString(0) + ", " + moves.getString(2) + ", " + moves.getString(4);
         assertTrue((model.getWinner() == model.getPlayerByNumber(0)), failureMessage);
     }
