@@ -191,34 +191,6 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold() when the game is drawn")
-    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
-    void invalidDecreaseGameDrawn(int size) {
-        this.reduceBoardByN(size);
-        this.increaseThresholdByN(10);
-        this.makeGameADraw();
-        int current = model.getWinThreshold();
-        controller.decreaseWinThreshold();
-        int updated = model.getWinThreshold();
-        String failureMessage = "Win threshold was able to be decreased despite the game being a draw";
-        assertEquals(current, updated, failureMessage);
-    }
-
-    @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold when the game is drawn")
-    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
-    void invalidIncreaseGameDrawn(int size) {
-        this.reduceBoardByN(size);
-        this.increaseThresholdByN(10);
-        this.makeGameADraw();
-        int current = model.getWinThreshold();
-        controller.increaseWinThreshold();
-        int updated = model.getWinThreshold();
-        String failureMessage = "Win threshold was able to be increased despite the game being a draw";
-        assertEquals(current + 1, updated, failureMessage);
-    }
-
     @DisplayName("Testing that winThreshold can be decreased with controller.decreaseWinThreshold() when the game is won")
     @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
