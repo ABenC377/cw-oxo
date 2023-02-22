@@ -94,11 +94,22 @@ public class WinThresholdTests {
         return IntStream.rangeClosed(1, 300).boxed();
     }
 
+    private void setWinThresh(int n) {
+        if (n < 3) {
+            return;
+        }
+        while (model.getWinThreshold() > n) {
+            controller.decreaseWinThreshold();
+        }
+        while (model.getWinThreshold() < n) {
+            controller.increaseWinThreshold();
+        }
+    }
     @DisplayName("Testing that winThreshold can be decreased on a 9x9 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease9x9Empty(int start) {
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -112,7 +123,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease8x8Empty(int start) {
         this.reduceBoardByN(1);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -126,7 +137,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease7x7Empty(int start) {
         this.reduceBoardByN(2);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -140,7 +151,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease6x6Empty(int start) {
         this.reduceBoardByN(3);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -154,7 +165,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease5x5Empty(int start) {
         this.reduceBoardByN(4);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -168,7 +179,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease4x4Empty(int start) {
         this.reduceBoardByN(5);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -182,7 +193,7 @@ public class WinThresholdTests {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease3x3Empty(int start) {
         this.reduceBoardByN(6);
-        model.setWinThreshold(9);
+        this.setWinThresh(9);
         this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
@@ -289,15 +300,4 @@ public class WinThresholdTests {
             }
         }
     }
-
-    private void makeGameADraw() {
-        for (int row = 0; row < model.getNumberOfRows(); row++) {
-            for (int col = 0; col < model.getNumberOfColumns(); col++) {
-                char rowChar = (char) ('a' + row);
-                String input = String.valueOf(rowChar) + String.valueOf(col + 1);
-                this.sendCommandToController(input);
-            }
-        }
-    }
-
 }

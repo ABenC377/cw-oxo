@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 
@@ -95,7 +94,7 @@ public class GameFinishedTests {
         this.sendCommandToController(moves.getString(3));
         this.sendCommandToController(moves.getString(4));
         String invalidSetupMessage = "playing a move in a winthreshold=1 game does not result in the game being won";
-        assertTrue(model.getWinner() != null, invalidSetupMessage);
+        assertNotNull(model.getWinner(), invalidSetupMessage);
         int start = model.getNumberOfRows();
         controller.removeRow();
         int current = model.getNumberOfRows();
@@ -164,7 +163,7 @@ public class GameFinishedTests {
         this.sendCommandToController(moves.getString(3));
         this.sendCommandToController(moves.getString(4));
         String invalidSetupMessage = "playing a move in a winthreshold=1 game does not result in the game being won";
-        assertTrue(model.getWinner() != null, invalidSetupMessage);
+        assertNotNull(model.getWinner(), invalidSetupMessage);
         int start = model.getNumberOfColumns();
         controller.removeColumn();
         int current = model.getNumberOfColumns();
@@ -242,7 +241,7 @@ public class GameFinishedTests {
         this.sendCommandToController(moves.getString(3));
         this.sendCommandToController(moves.getString(4));
         String invalidSetupMessage = "playing a move in a winthreshold=1 game does not result in the game being won";
-        assertTrue(model.getWinner() != null, invalidSetupMessage);
+        assertNotNull(model.getWinner(), invalidSetupMessage);
         int start = model.getNumberOfRows();
         controller.addRow();
         int current = model.getNumberOfRows();
@@ -320,7 +319,7 @@ public class GameFinishedTests {
         this.sendCommandToController(moves.getString(3));
         this.sendCommandToController(moves.getString(4));
         String invalidSetupMessage = "playing a move in a winthreshold=1 game does not result in the game being won";
-        assertTrue(model.getWinner() != null, invalidSetupMessage);
+        assertNotNull(model.getWinner(), invalidSetupMessage);
         int start = model.getNumberOfColumns();
         controller.addColumn();
         int current = model.getNumberOfColumns();

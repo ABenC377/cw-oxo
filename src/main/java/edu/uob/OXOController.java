@@ -1,6 +1,5 @@
 package edu.uob;
 import edu.uob.OXOMoveException.*;
-import org.jetbrains.annotations.NotNull;
 
 import static java.lang.Character.*;
 
@@ -144,7 +143,9 @@ public class OXOController {
     }
     public void increaseWinThreshold() {
         int currentThreshold = gameModel.getWinThreshold();
-        gameModel.setWinThreshold(currentThreshold + 1);
+        if (((long)currentThreshold + 1) >> 32 == 0) {
+            gameModel.setWinThreshold(currentThreshold + 1);
+        }
     }
 
     public void decreaseWinThreshold() {

@@ -11,11 +11,13 @@ public class OXOModel {
     private int winThreshold;
 
     public OXOModel(int numberOfRows, int numberOfColumns, int winThresh) {
-        winThreshold = (winThresh >= 3) ? winThresh : 3;
+        winThreshold = Math.max(winThresh, 3);
         cells = new ArrayList<>();
-        for (int i = 0; i < numberOfRows; i++) {
+        int rows = Math.max(Math.min(numberOfRows, 9), 1);
+        int cols = Math.max(Math.min(numberOfColumns, 9), 1);
+        for (int i = 0; i < rows; i++) {
             cells.add(new ArrayList<>());
-            for (int j = 0; j < numberOfColumns; j++) {
+            for (int j = 0; j < cols; j++) {
                 cells.get(i).add(null);
             }
         }
@@ -30,12 +32,6 @@ public class OXOModel {
 
     public void addPlayer(OXOPlayer player) {
         players.add(player);
-    }
-
-    public void removePlayer() {
-        if (players.size() > 0) {
-            players.remove(players.size() - 1);
-        }
     }
 
     public OXOPlayer getPlayerByNumber(int number) {
