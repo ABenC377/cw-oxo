@@ -30,7 +30,7 @@ public class WinThresholdTests {
         assertTimeoutPreemptively(Duration.ofMillis(1000), ()-> controller.handleIncomingCommand(command), timeoutComment);
     }
 
-    @DisplayName("Testing that winThreshold can be increased on a 9x9 board with controller.increaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be increased on a 9x9 board with controller.increaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validIncrease9x9Empty(int start) {
@@ -42,7 +42,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold + 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be increased on a 8x8 board with controller.increaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be increased on a 8x8 board with controller.increaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validIncrease8x8Empty(int start) {
@@ -56,7 +56,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold + 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be increased on a 7x7 board with controller.increaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be increased on a 7x7 board with controller.increaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validIncrease7x7Empty(int start) {
@@ -72,7 +72,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold + 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be increased on a 6x6 board with controller.increaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be increased on a 6x6 board with controller.increaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validIncrease6x6Empty(int start) {
@@ -94,7 +94,7 @@ public class WinThresholdTests {
         return IntStream.rangeClosed(1, 100).boxed();
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 9x9 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 9x9 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease9x9Empty(int start) {
@@ -107,7 +107,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 8x8 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 8x8 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease8x8Empty(int start) {
@@ -121,7 +121,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 7x7 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 7x7 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease7x7Empty(int start) {
@@ -135,7 +135,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 6x6 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 6x6 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease6x6Empty(int start) {
@@ -149,7 +149,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 5x5 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 5x5 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease5x5Empty(int start) {
@@ -163,7 +163,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 4x4 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 4x4 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease4x4Empty(int start) {
@@ -177,7 +177,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold can be decreased on a 3x3 board with controller.decreaseWinThreshold")
+    @DisplayName("Testing that winThreshold can be decreased on a 3x3 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
     @MethodSource("intProvider")
     void validDecrease3x3Empty(int start) {
@@ -191,7 +191,7 @@ public class WinThresholdTests {
         assertEquals(updatedThreshold, startingThreshold - 1, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold when the game is drawn")
+    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold() when the game is drawn")
     @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void invalidDecreaseGameDrawn(int size) {
@@ -205,7 +205,7 @@ public class WinThresholdTests {
         assertEquals(current, updated, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be increased with controller.decreaseWinThreshold when the game is drawn")
+    @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold when the game is drawn")
     @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void invalidIncreaseGameDrawn(int size) {
@@ -216,10 +216,10 @@ public class WinThresholdTests {
         controller.increaseWinThreshold();
         int updated = model.getWinThreshold();
         String failureMessage = "Win threshold was able to be increased despite the game being a draw";
-        assertEquals(current, updated, failureMessage);
+        assertEquals(current + 1, updated, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold when the game is won")
+    @DisplayName("Testing that winThreshold can be decreased with controller.decreaseWinThreshold() when the game is won")
     @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void invalidDecreaseGameWon(int size) {
@@ -228,11 +228,11 @@ public class WinThresholdTests {
         int current = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updated = model.getWinThreshold();
-        String failureMessage = "Win threshold was able to be decreased despite the game being won";
-        assertEquals(current, updated, failureMessage);
+        String failureMessage = "Win threshold was not able to be decreased when the game is won";
+        assertEquals(current - 1, updated, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be increased with controller.decreaseWinThreshold when the game is won")
+    @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold() when the game is won")
     @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void invalidIncreaseGameWon(int size) {
@@ -241,11 +241,11 @@ public class WinThresholdTests {
         int current = model.getWinThreshold();
         controller.increaseWinThreshold();
         int updated = model.getWinThreshold();
-        String failureMessage = "Win threshold was able to be increased despite the game being won";
-        assertEquals(current, updated, failureMessage);
+        String failureMessage = "Win threshold was not able to be increased when the game is won";
+        assertEquals(current + 1, updated, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold when the game has begun")
+    @DisplayName("Testing that winThreshold cannot be decreased with controller.decreaseWinThreshold() when the game has begun")
     @ParameterizedTest(name = "{displayName} with a play at {arguments}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
             "H1", "i1", "I1", "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
@@ -266,7 +266,7 @@ public class WinThresholdTests {
         assertEquals(start, current, failureMessage);
     }
 
-    @DisplayName("Testing that winThreshold cannot be increased with controller.decreaseWinThreshold when the game has begun")
+    @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold() when the game has begun")
     @ParameterizedTest(name = "{displayName} with a play at {arguments}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1", "h1",
             "H1", "i1", "I1", "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2", "h2",
@@ -284,7 +284,7 @@ public class WinThresholdTests {
         controller.increaseWinThreshold();
         int current = model.getWinThreshold();
         String failureMessage = "Win threshold was increased despite game having been started";
-        assertEquals(start, current, failureMessage);
+        assertEquals(start + 1, current, failureMessage);
     }
 
 
@@ -311,6 +311,10 @@ public class WinThresholdTests {
         for (int i = 0; i < n; i++) {
             String aString = "a" + (i + 1);
             sendCommandToController(aString);
+            if (i != n - 1) {
+                String bString = "b" + (i + 1);
+                sendCommandToController(bString);
+            }
         }
     }
 

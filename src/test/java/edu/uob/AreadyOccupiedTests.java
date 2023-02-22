@@ -52,7 +52,7 @@ public class AreadyOccupiedTests {
      * we can be certain that the game will continue until there is a repeated move.
      */
     @RepeatedTest(500)
-    @DisplayName("Throws a CellAlreadyTakenException when a play that has already been made is made again in a 9X9 board")
+    @DisplayName("Testing that CellAlreadyTakenException is thrown when a randomised game results in a play being repeated in a 9X9 board")
     void testRandomMoves() {
         String moveBeingPlayed = "a1";
         while (!played.contains(moveBeingPlayed)) {

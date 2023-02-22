@@ -38,7 +38,7 @@ public class MultiPlayerTests {
         int start = model.getNumberOfPlayers();
         this.removeNPlayers(n);
         int current = model.getNumberOfPlayers();
-        String failureMessage = "removing " + n + " players to the model did not update the number of players to 200 - " + n;
+        String failureMessage = "Starting from 81 playersß removing " + n + " players to the model did not update the number of players to 200 - " + n;
         assertEquals(start - n, current, failureMessage);
     }
 

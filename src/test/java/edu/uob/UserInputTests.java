@@ -62,7 +62,9 @@ public class UserInputTests {
     @ParameterizedTest(name = "{displayName}.  input is {arguments}")
     @ValueSource(strings = {"!1", "\"1", "#1", "$1", "%1", "&1", "'1", "(1", ")1", "*1", "+1", ",1", "-1", ".1",
             "/1", "01", "11", "21", "31", "41", "51", "61", "71", "81", "91", ":1", ";1", "<1", "=1", ">1",
-            "?1", "@1", "[1", "\\1", "]1", "^1", "_1", "`1", "{1", "|1", "}1", "~1"})
+            "?1", "@1", "[1", "\\1", "]1", "^1", "_1", "`1", "{1", "|1", "}1", "~1", "Ω1", "å1", "œ1", "∑1", "ß1",
+            "≈1", "´1", "∂1", "ç1", "√1", "ƒ1", "®1", "†1", "©1", "∫1", "~1", "˙1", "¥1", "¨1", "^1", "∆1", "µ1",
+            "˚1", "ø1", "¬1", "π1"})
     void testWrongRowInputs(String inputString) {
         String failedTestString = "Input of non-letter row identifier doesn't throw an InvalidIdentifierCharacterException";
         assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(inputString), failedTestString);
@@ -74,8 +76,8 @@ public class UserInputTests {
             "a/", "a:", "a;", "a<", "a=", "a>", "a?", "a@", "aA", "aB", "aC", "aD", "aE", "aF", "aG", "aH", "aI",
             "aJ", "aK", "aL", "aM", "aN", "aO", "aP", "aQ", "aR", "aS", "aT", "aU", "aV", "aW", "aX", "aY", "aZ",
             "[1", "\\1", "]1", "^1", "_1", "`1", "aa", "ab", "ac", "ad", "ae", "af", "ag", "ah", "ai", "aj", "ak",
-            "al", "am", "an", "ao", "ap", "aq", "ar", "as", "at", "au", "av", "aw", "ax", "ay", "az", "{1", "|1",
-            "}1", "~1"})
+            "al", "am", "an", "ao", "ap", "aq", "ar", "as", "at", "au", "av", "aw", "ax", "ay", "az", "a¡", "a€",
+            "a#", "a¢", "a∞", "a§", "a¶", "a•", "aª", "aº"})
     void testWrongColumnInputs(String inputString) {
         String failedTestString = "Input of non-digit column identifier doesn't throw an InvalidIdentifierCharacterException";
         assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(inputString), failedTestString);

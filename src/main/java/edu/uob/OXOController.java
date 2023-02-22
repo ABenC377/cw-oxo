@@ -50,7 +50,7 @@ public class OXOController {
 
     private int getRowIndex(@NotNull String command) throws OXOMoveException {
         char rowChar = command.trim().charAt(0);
-        if (!isLetter(rowChar)) {
+        if (!(rowChar >= 'A' && rowChar <= 'Z') && !(rowChar >= 'a' && rowChar <= 'z')) {
             throw new InvalidIdentifierCharacterException(RowOrColumn.ROW, rowChar);
         }
         int row = (int)toLowerCase(rowChar) - (int)'a';
@@ -62,7 +62,7 @@ public class OXOController {
 
     private int getColIndex(@NotNull String command) throws OXOMoveException {
         char colChar = command.trim().charAt(1);
-        if (!isDigit(colChar)) {
+        if (!(colChar >= '0' && colChar <= '9')) {
             throw new InvalidIdentifierCharacterException(RowOrColumn.COLUMN, colChar);
         }
         int col = (int)colChar - (int)'1';
@@ -79,7 +79,10 @@ public class OXOController {
         }
     }
     public void removeRow() {
-        if (gameModel.getNumberOfRows() > 1 && this.lastRowIsEmpty()) {
+        boolean lastRowEmpty = this.lastRowIsEmpty();
+        boolean otherRowsNotFull = !this.otherRowsFull();
+        boolean safeToReduce = lastRowEmpty && otherRowsNotFull;
+        if (gameModel.getNumberOfRows() > 1 && safeToReduce ) {
             gameModel.removeRow();
         }
     }
@@ -93,6 +96,16 @@ public class OXOController {
         }
         return true;
     }
+    private boolean otherRowsFull() {
+        for (int row = 0; row < (gameModel.getNumberOfRows() - 1); row++) {
+            for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {
+                if (gameModel.getCellOwner(row, col) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public void addColumn() {
         if (gameModel.getNumberOfColumns() < 9) {
             gameModel.addColumn();
@@ -100,7 +113,10 @@ public class OXOController {
         }
     }
     public void removeColumn() {
-        if (gameModel.getNumberOfColumns() > 1 && this.lastColumnIsEmpty()) {
+        boolean lastColEmpty = this.lastColumnIsEmpty();
+        boolean otherColsNotFull = !this.otherColumnsFull();
+        boolean safeToReduce = lastColEmpty && otherColsNotFull;
+        if (gameModel.getNumberOfColumns() > 1 && safeToReduce) {
             gameModel.removeColumn();
         }
     }
@@ -114,15 +130,23 @@ public class OXOController {
         }
         return true;
     }
-    public void increaseWinThreshold() {
-        if (isEmpty()) {
-            int currentThreshold = gameModel.getWinThreshold();
-            gameModel.setWinThreshold(currentThreshold + 1);
+    private boolean otherColumnsFull() {
+        for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
+            for (int col = 0; col < (gameModel.getNumberOfColumns() - 1); col++) {
+                if (gameModel.getCellOwner(row, col) == null) {
+                    return false;
+                }
+            }
         }
+        return true;
+    }
+    public void increaseWinThreshold() {
+        int currentThreshold = gameModel.getWinThreshold();
+        gameModel.setWinThreshold(currentThreshold + 1);
     }
 
     public void decreaseWinThreshold() {
-        if (isEmpty()) {
+        if (isEmpty() || gameModel.getWinner() != null) {
             int currentThreshold = gameModel.getWinThreshold();
             gameModel.setWinThreshold(currentThreshold - 1);
         }
@@ -135,31 +159,6 @@ public class OXOController {
                     return false;
                 }
             }
-        }
-        return true;
-    }
-
-    private boolean canReduceThreshold() {
-        int current = gameModel.getWinThreshold();
-        OXOPlayer winner = null;
-        gameModel.setWinThreshold(current - 1);
-        for (int row = 0; row < gameModel.getNumberOfRows(); row++) {
-            for (int col = 0; col < gameModel.getNumberOfColumns(); col++) {
-                OXOPlayer owner = gameModel.getCellOwner(row, col);
-                boolean shouldCheck = (owner != null && owner != winner);
-                if (shouldCheck && this.moveIsAWinner(row, col)) {
-                    if (winner == null) {
-                        winner = owner;
-                    } else {
-                        gameModel.setWinThreshold(current);
-                        return false;
-                    }
-                }
-            }
-        }
-        gameModel.setWinThreshold(current);
-        if (winner != null) {
-            gameModel.setWinner(winner);
         }
         return true;
     }

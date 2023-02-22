@@ -1,6 +1,7 @@
 package edu.uob;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -31,7 +32,8 @@ public class GameFinishedTests {
 
     // Should be able to change board size after a game is won (so long as there are no moves in the row/column
     // to be removed)
-    @ParameterizedTest
+    @DisplayName("Testing that ")
+    @ParameterizedTest(name = "{displayName}")
     @ValueSource(strings = {"a1", "A1", "b1", "B1", "c1", "C1", "d1", "D1", "e1", "E1", "f1", "F1", "g1", "G1",
             "a2", "A2", "b2", "B2", "c2", "C2", "d2", "D2", "e2", "E2", "f2", "F2", "g2", "G2",
             "a3", "A3", "b3", "B3", "c3", "C3", "d3", "D3", "e3", "E3", "f3", "F3", "g3", "G3",
