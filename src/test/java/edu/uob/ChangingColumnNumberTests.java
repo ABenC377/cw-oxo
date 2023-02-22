@@ -18,7 +18,7 @@ public class ChangingColumnNumberTests {
     // In order to test boards of different sizes, winning thresholds or number of players, create a separate test file (without this method in it !)
     @BeforeEach
     void setup() {
-        model = new OXOModel(3, 3, 3);
+        model = new OXOModel(3, 3, 10);
         model.addPlayer(new OXOPlayer('X'));
         model.addPlayer(new OXOPlayer('O'));
         controller = new OXOController(model);
@@ -433,6 +433,126 @@ public class ChangingColumnNumberTests {
         String failureMessage = "controller.removeColumn() removed a column despite it resulting in a draw state";
         assertEquals(start, current, failureMessage);
     }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x1 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest1Col(int rows) {
+        this.removeNColumns(2);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x2 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest2Col(int rows) {
+        this.removeNColumns(1);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x3 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest3Col(int rows) {
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x4 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest4Col(int rows) {
+        this.addNColumns(1);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x5 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest5Col(int rows) {
+        this.addNColumns(2);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x6 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest6Col(int rows) {
+        this.addNColumns(3);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x7 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest7Col(int rows) {
+        this.addNColumns(4);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
+    @DisplayName("Testing that controller.addColumn() when in a draw removes the draw state from the model")
+    @ParameterizedTest(name = "{displayName} in a {arguments}x8 board")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void addColumnToEscapeDrawTest8Col(int rows) {
+        this.addNColumns(5);
+        this.removeNRows(2);
+        this.addNRows(rows - 1);
+        this.fillCells(model.getNumberOfRows(), model.getNumberOfColumns());
+        String setupFailureMessage = "Game is not in a drawn state despite all cells being occupied";
+        assertTrue(model.isGameDrawn(), setupFailureMessage);
+        controller.addColumn();
+        String failureMessage = "Adding a column to a draw state does not make the game undrawn";
+        assertFalse(model.isGameDrawn(), failureMessage);
+    }
+
 
     private void addNColumns(int n) {
         for (int i = 0; i < n; i++) {

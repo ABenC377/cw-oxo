@@ -4,9 +4,12 @@ import edu.uob.OXOMoveException.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,15 +62,16 @@ public class UserInputTests {
     }
 
     @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-letter row identifier is provided")
-    @ParameterizedTest(name = "{displayName}.  input is {arguments}")
-    @ValueSource(strings = {"!1", "\"1", "#1", "$1", "%1", "&1", "'1", "(1", ")1", "*1", "+1", ",1", "-1", ".1",
-            "/1", "01", "11", "21", "31", "41", "51", "61", "71", "81", "91", ":1", ";1", "<1", "=1", ">1",
-            "?1", "@1", "[1", "\\1", "]1", "^1", "_1", "`1", "{1", "|1", "}1", "~1", "Ω1", "å1", "œ1", "∑1", "ß1",
-            "≈1", "´1", "∂1", "ç1", "√1", "ƒ1", "®1", "†1", "©1", "∫1", "~1", "˙1", "¥1", "¨1", "^1", "∆1", "µ1",
-            "˚1", "ø1", "¬1", "π1"})
-    void testWrongRowInputs(String inputString) {
+    @ParameterizedTest(name = "{displayName}.  input is 'unicode({arguments})1'")
+    @MethodSource("letterGenerator")
+    void testWrongRowInputs(int unicode) {
+        String command = (char)unicode + "1";
         String failedTestString = "Input of non-letter row identifier doesn't throw an InvalidIdentifierCharacterException";
-        assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(inputString), failedTestString);
+        assertThrows(InvalidIdentifierCharacterException.class, ()-> sendCommandToController(command), failedTestString);
+    }
+
+    static Stream<Integer> letterGenerator() {
+        return IntStream.rangeClosed(123, 1000).boxed();
     }
 
     @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-digit column identifier is provided")
@@ -75,7 +79,7 @@ public class UserInputTests {
     @ValueSource(strings = {"a!", "a\"", "a#", "a$", "a%", "a&", "a'", "a(", "a)", "a*", "a+", "a,", "a-", "a.",
             "a/", "a:", "a;", "a<", "a=", "a>", "a?", "a@", "aA", "aB", "aC", "aD", "aE", "aF", "aG", "aH", "aI",
             "aJ", "aK", "aL", "aM", "aN", "aO", "aP", "aQ", "aR", "aS", "aT", "aU", "aV", "aW", "aX", "aY", "aZ",
-            "[1", "\\1", "]1", "^1", "_1", "`1", "aa", "ab", "ac", "ad", "ae", "af", "ag", "ah", "ai", "aj", "ak",
+            "a'", "aƒ", "a∑", "a^", "aπ", "aß", "aa", "ab", "ac", "ad", "ae", "af", "ag", "ah", "ai", "aj", "ak",
             "al", "am", "an", "ao", "ap", "aq", "ar", "as", "at", "au", "av", "aw", "ax", "ay", "az", "a¡", "a€",
             "a#", "a¢", "a∞", "a§", "a¶", "a•", "aª", "aº"})
     void testWrongColumnInputs(String inputString) {

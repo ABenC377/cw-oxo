@@ -91,7 +91,7 @@ public class WinThresholdTests {
     }
 
     static Stream<Integer> intProvider() {
-        return IntStream.rangeClosed(1, 100).boxed();
+        return IntStream.rangeClosed(1, 300).boxed();
     }
 
     @DisplayName("Testing that winThreshold can be decreased on a 9x9 board with controller.decreaseWinThreshold()")
