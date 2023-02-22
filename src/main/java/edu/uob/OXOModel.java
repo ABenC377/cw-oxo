@@ -11,7 +11,7 @@ public class OXOModel {
     private int winThreshold;
 
     public OXOModel(int numberOfRows, int numberOfColumns, int winThresh) {
-        winThreshold = winThresh;
+        winThreshold = (winThresh >= 3) ? winThresh : 3;
         cells = new ArrayList<>();
         for (int i = 0; i < numberOfRows; i++) {
             cells.add(new ArrayList<>());

@@ -221,6 +221,7 @@ public class UserInputTests {
         controller.removeRow();
         controller.removeColumn();
         controller.removeRow();
+        System.out.println("Board size if R:" + model.getNumberOfRows() + " C:" + model.getNumberOfColumns());
         String failedTestString = "Input of a cell outside of the board doesn't throw an OutsideCellRangeException";
         assertThrows(OutsideCellRangeException.class, ()-> sendCommandToController(inputString), failedTestString);
     }

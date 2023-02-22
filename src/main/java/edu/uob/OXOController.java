@@ -81,7 +81,8 @@ public class OXOController {
     public void removeRow() {
         boolean lastRowEmpty = this.lastRowIsEmpty();
         boolean otherRowsNotFull = !this.otherRowsFull();
-        boolean safeToReduce = lastRowEmpty && otherRowsNotFull;
+        boolean gameIsAlreadyWon = (gameModel.getWinner() != null);
+        boolean safeToReduce = lastRowEmpty && (otherRowsNotFull || gameIsAlreadyWon);
         if (gameModel.getNumberOfRows() > 1 && safeToReduce ) {
             gameModel.removeRow();
         }
@@ -115,7 +116,8 @@ public class OXOController {
     public void removeColumn() {
         boolean lastColEmpty = this.lastColumnIsEmpty();
         boolean otherColsNotFull = !this.otherColumnsFull();
-        boolean safeToReduce = lastColEmpty && otherColsNotFull;
+        boolean gameIsAlreadyWon = (gameModel.getWinner() != null);
+        boolean safeToReduce = lastColEmpty && (otherColsNotFull || gameIsAlreadyWon);
         if (gameModel.getNumberOfColumns() > 1 && safeToReduce) {
             gameModel.removeColumn();
         }
