@@ -48,7 +48,7 @@ public class OXOController {
         return (gameModel.getWinner() != null);
     }
 
-    private int getRowIndex(@NotNull String command) throws OXOMoveException {
+    private int getRowIndex(String command) throws OXOMoveException {
         char rowChar = command.trim().charAt(0);
         if (!(rowChar >= 'A' && rowChar <= 'Z') && !(rowChar >= 'a' && rowChar <= 'z')) {
             throw new InvalidIdentifierCharacterException(RowOrColumn.ROW, rowChar);
@@ -60,7 +60,7 @@ public class OXOController {
         return row;
     }
 
-    private int getColIndex(@NotNull String command) throws OXOMoveException {
+    private int getColIndex(String command) throws OXOMoveException {
         char colChar = command.trim().charAt(1);
         if (!(colChar >= '0' && colChar <= '9')) {
             throw new InvalidIdentifierCharacterException(RowOrColumn.COLUMN, colChar);
@@ -146,7 +146,7 @@ public class OXOController {
     }
 
     public void decreaseWinThreshold() {
-        if (isEmpty() || gameModel.getWinner() != null) {
+        if ((isEmpty() || gameModel.getWinner() != null) && (gameModel.getWinThreshold() > 3)) {
             int currentThreshold = gameModel.getWinThreshold();
             gameModel.setWinThreshold(currentThreshold - 1);
         }

@@ -96,10 +96,10 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 9x9 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease9x9Empty(int start) {
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -109,11 +109,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 8x8 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease8x8Empty(int start) {
         this.reduceBoardByN(1);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -123,11 +123,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 7x7 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease7x7Empty(int start) {
         this.reduceBoardByN(2);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -137,11 +137,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 6x6 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease6x6Empty(int start) {
         this.reduceBoardByN(3);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -151,11 +151,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 5x5 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease5x5Empty(int start) {
         this.reduceBoardByN(4);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -165,11 +165,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 4x4 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease4x4Empty(int start) {
         this.reduceBoardByN(5);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -179,11 +179,11 @@ public class WinThresholdTests {
 
     @DisplayName("Testing that winThreshold can be decreased on a 3x3 board with controller.decreaseWinThreshold()")
     @ParameterizedTest(name = "{displayName} {arguments} time(s)")
-    @MethodSource("intProvider")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void validDecrease3x3Empty(int start) {
         this.reduceBoardByN(6);
         model.setWinThreshold(9);
-        this.decreaseThresholdByN(start - 1);
+        this.decreaseThresholdByN(start);
         int startingThreshold = model.getWinThreshold();
         controller.decreaseWinThreshold();
         int updatedThreshold = model.getWinThreshold();
@@ -229,7 +229,7 @@ public class WinThresholdTests {
         controller.decreaseWinThreshold();
         int updated = model.getWinThreshold();
         String failureMessage = "Win threshold was not able to be decreased when the game is won";
-        assertEquals(current - 1, updated, failureMessage);
+        assertEquals(current, updated, failureMessage);
     }
 
     @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold() when the game is won")
