@@ -71,7 +71,7 @@ public class UserInputTests {
     }
 
     static Stream<Integer> letterGenerator() {
-        return IntStream.rangeClosed(123, 1000).boxed();
+        return IntStream.rangeClosed(123, 2000).boxed();
     }
 
     @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-digit column identifier is provided")
