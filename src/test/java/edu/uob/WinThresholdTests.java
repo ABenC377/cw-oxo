@@ -203,7 +203,7 @@ public class WinThresholdTests {
     }
 
     @DisplayName("Testing that winThreshold can be decreased with controller.decreaseWinThreshold() when the game is won")
-    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
+    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - {arguments}) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void invalidDecreaseGameWon(int size) {
         this.reduceBoardByN(size);
@@ -216,7 +216,7 @@ public class WinThresholdTests {
     }
 
     @DisplayName("Testing that winThreshold can be increased with controller.increaseWinThreshold() when the game is won")
-    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - arguments) board")
+    @ParameterizedTest(name = "{displayName} on a (9 - {arguments})x(9 - {arguments}) board")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void invalidIncreaseGameWon(int size) {
         this.reduceBoardByN(size);

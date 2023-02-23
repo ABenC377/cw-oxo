@@ -62,7 +62,7 @@ public class UserInputTests {
     }
 
     @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-letter row identifier is provided")
-    @ParameterizedTest(name = "{displayName}.  input is 'unicode({arguments})1'")
+    @ParameterizedTest(name = "{displayName}.  Row identifier is unicode(123 + {index})")
     @MethodSource("letterGenerator")
     void testWrongRowInputs(int unicode) {
         String command = (char)unicode + "1";
@@ -71,7 +71,7 @@ public class UserInputTests {
     }
 
     static Stream<Integer> letterGenerator() {
-        return IntStream.rangeClosed(123, 2000).boxed();
+        return IntStream.rangeClosed(123, 2222).boxed();
     }
 
     @DisplayName("Testing that InvalidIdentifierCharacterException is thrown when a non-digit column identifier is provided")
