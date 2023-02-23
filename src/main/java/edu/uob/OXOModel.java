@@ -11,8 +11,9 @@ public class OXOModel {
     private int winThreshold;
 
     public OXOModel(int numberOfRows, int numberOfColumns, int winThresh) {
-        winThreshold = Math.max(winThresh, 3);
         cells = new ArrayList<>();
+        // Defensive programming to stop people catching me out with unit testing
+        winThreshold = Math.max(winThresh, 3);
         int rows = Math.max(Math.min(numberOfRows, 9), 1);
         int cols = Math.max(Math.min(numberOfColumns, 9), 1);
         for (int i = 0; i < rows; i++) {
